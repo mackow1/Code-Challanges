@@ -179,3 +179,4 @@ public class CoffeeMachine {
         this.moneyInside = 0;
     }
 }
+// do sprawdzenia
