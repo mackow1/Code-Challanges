@@ -2,7 +2,9 @@ package org.example;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 class CheckNumbers {
 
@@ -96,8 +98,6 @@ class CheckNumbers {
         int multiplication = 1;
         for (int i : nums) {
             counter += i;
-        }
-        for (int i : nums) {
             multiplication *= i;
         }
         if (counter == multiplication) isSpy = true;
@@ -125,25 +125,23 @@ class CheckNumbers {
     }
 
     public boolean isJumping(BigInteger input) {
-        boolean isJumping = false;
-        if (input.compareTo(BigInteger.TEN) == 1){
+        if (input.compareTo(BigInteger.TEN) == 1) {
             String inputToString = input.toString();
-            int[] numbers = new int[inputToString.length()];
-            for (int i = 0; i < numbers.length; i++) {
-                int newNum = Integer.parseInt(String.valueOf(inputToString.charAt(i)));
-                numbers[i] = newNum;
-            }
+            int num1 = 0;
+            int num2 = 0;
             int counter = 1;
-            for (int i = 0; i < numbers.length - 1; i++) {
-                if (Math.abs(numbers[i] - numbers[i + 1]) == 1 && Math.abs(numbers[numbers.length - 1] - numbers[numbers.length - 2]) == 1) {
+            for (int i = 0; i < inputToString.length() - 1; i++) {
+                num1 = Integer.parseInt(String.valueOf(inputToString.charAt(i)));
+                num2 = Integer.parseInt(String.valueOf(inputToString.charAt(i + 1)));
+                if (Math.abs(num1 - num2) == 1) {
                     counter++;
                 }
             }
-            if (counter == numbers.length) isJumping = true;
+            if (counter == inputToString.length()) return true;
         } else {
             return true;
         }
-        return isJumping;
+        return false;
     }
 
     public String happyLogic(String inputStr) {
@@ -152,16 +150,13 @@ class CheckNumbers {
         for (int i = 0; i < inputStr.length(); i++) {
             numArr.add(Integer.parseInt(String.valueOf(inputStr.charAt(i))));
         }
-        //System.out.println(numArr);
         for (int i = 0; i < numArr.size(); i++) {
             squared.add((int)(Math.pow(numArr.get(i), 2)));
         }
-        //System.out.println(squared);
         int sum = 0;
         for (int i : squared) {
             sum += i;
         }
-        //System.out.println(sum);
         return String.valueOf(sum);
     }
 
@@ -170,7 +165,6 @@ class CheckNumbers {
         String inputStr = input + "";
         String inputCopy = this.happyLogic(inputStr);
         while (!inputCopy.equals("1")) {
-            //System.out.println("inside while happy");
             inputCopy = this.happyLogic(inputCopy);
             if (inputCopy.equals(inputStr) || inputCopy.equals("4")) break;
         }
@@ -185,7 +179,6 @@ class CheckNumbers {
         String inputStr = input + "";
         String inputCopy = this.happyLogic(inputStr);
         while (!inputCopy.equals(inputStr)) {
-            //System.out.println("inside while sad");
             inputCopy = this.happyLogic(inputCopy);
             if (inputCopy.equals("1") || inputCopy.equals("4")) break;
         }
@@ -216,7 +209,6 @@ class CheckNumbers {
 
     public void checkRangeOfNumbers(BigInteger input, int targetNum) {
         for (int i = 0; i < targetNum; i++) {
-            //System.out.println("inside for");
             StringBuilder attached = new StringBuilder();
 
             if (this.isBuzz(input.add(BigInteger.valueOf(i)))) attached.append(" buzz,");
@@ -231,28 +223,9 @@ class CheckNumbers {
             if (this.isSad(input.add(BigInteger.valueOf(i)))) attached.append(" sad,");
             if (this.isEven(input.add(BigInteger.valueOf(i)))) attached.append(" even,");
             if (this.isOdd(input.add(BigInteger.valueOf(i)))) attached.append(" odd,");
-            //System.out.println("inside for");
 
             System.out.println(input.add(BigInteger.valueOf(i)) + " is" + attached.deleteCharAt(attached.length() - 1));
         }
-    }
-
-    public void checkForPropertyMethod(BigInteger input) {
-
-        StringBuilder attached = new StringBuilder();
-        if (this.isBuzz(input)) attached.append(" buzz,");
-        if (this.isDuck(input)) attached.append(" duck,");
-        if (this.isPalindromic(input)) attached.append(" palindromic,");
-        if (this.isGapful(input)) attached.append(" gapful,");
-        if (this.isSpy(input)) attached.append(" spy,");
-        if (this.isSquare(input)) attached.append(" square,");
-        if (this.isSunny(input)) attached.append(" sunny,");
-        if (this.isJumping(input)) attached.append(" jumping,");
-        if (this.isHappy(input)) attached.append(" happy,");
-        if (this.isSad(input)) attached.append(" sad,");
-        if (this.isEven(input)) attached.append(" even,");
-        if (this.isOdd(input)) attached.append(" odd,");
-        System.out.println(input + " is" + attached.deleteCharAt(attached.length() - 1));
     }
 
     public boolean switchCheckNumber(String userInput, BigInteger input) {
@@ -276,10 +249,8 @@ class CheckNumbers {
     public void checkAllProperties(BigInteger input, int secondNum, String[] properties) {
         int foundNumbers = 0;
         while (foundNumbers < secondNum) {
-            //System.out.println("inside while");
             int counter = 0;
             for (String s : properties) {
-                //System.out.println("inside for");
                 String minusLess = s.substring(1);
                 if (s.charAt(0) != '-' && this.switchCheckNumber(s, input)) {
                     counter++;
@@ -289,13 +260,10 @@ class CheckNumbers {
                     counter++;
                 }
             }
-            //System.out.println("after for");
             if (counter == properties.length) {
-                //System.out.println("inside if");
-                this.checkForPropertyMethod(input);
+                this.checkRangeOfNumbers(input, 1);
                 foundNumbers++;
             }
-            //System.out.println("after if");
             input = input.add(BigInteger.ONE);
         }
     }

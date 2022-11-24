@@ -88,7 +88,8 @@ class Main {
         Scanner scn = new Scanner(System.in);
         printGreetings();
         printInstruction();
-        while (true) {
+        boolean stop = false;
+        while (!stop) {
             System.out.println("\nEnter a request:");
             String input = scn.nextLine();
             input = input.toUpperCase();
@@ -102,6 +103,7 @@ class Main {
             } else if (firstNum.compareTo(BigInteger.ZERO) == 0) {
                 System.out.println("\nGoodbye!");
                 break;
+                stop = true;
             } else {
                 if (inputNumsArray.length == 1) {
                     CheckNumbers newCheck = new CheckNumbers(firstNum);
