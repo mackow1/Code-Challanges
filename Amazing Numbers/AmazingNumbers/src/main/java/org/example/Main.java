@@ -102,6 +102,7 @@ class Main {
                 System.out.println("The first parameter should be a natural number or zero.");
             } else if (firstNum.compareTo(BigInteger.ZERO) == 0) {
                 System.out.println("\nGoodbye!");
+                break;
                 stop = true;
             } else {
                 if (inputNumsArray.length == 1) {
